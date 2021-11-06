@@ -1,0 +1,22 @@
+<div *ngIf="article" class="container py-5">
+  <div class="card mb-3 box-shadow">
+    <ngx-picture
+      mat-card-image
+      [src]="
+        article.coverImageUrl
+          ? article.coverImageUrl
+          : 'https://material.angular.io/assets/img/examples/shiba2.jpg'
+      "
+      class="card-img-top image-top"
+      alt="test"
+      [lazyLoad]="true"
+      #picture
+    ></ngx-picture>
+    <div class="card-body">
+      <h1 class="card-title">
+        {{ article.title ? article.title : "Title Test" }}
+      </h1>
+      <div class="card-text" [innerHtml]="article.content"></div>
+    </div>
+  </div>
+</div>
