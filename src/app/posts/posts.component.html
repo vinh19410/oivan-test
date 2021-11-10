@@ -1,15 +1,11 @@
-<div class="container py-5">
-  <mat-form-field
-    *ngIf="isShowFilter"
-    class="example-form-field"
-    appearance="fill"
-  >
+<div *ngIf="isShowFilter" #divContainerContent class="container py-5">
+  <mat-form-field class="example-form-field" appearance="fill">
     <mat-label>Search article</mat-label>
     <input
       matInput
       type="text"
       [(ngModel)]="valueSearch"
-      (ngModelChange)="onChangSearch($event)"
+      (ngModelChange)="onChangeSearch($event)"
     />
     <button
       *ngIf="valueSearch"
@@ -22,55 +18,74 @@
     </button>
   </mat-form-field>
 
-  <mat-grid-list
-    [cols]="breakpoint"
-    rowHeight="400"
-    gutterSize="20"
-    (window:resize)="onResize($event)"
-  >
-    <mat-grid-tile *ngFor="let item of articles">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title (click)="viewDetail(item)">{{
-            item.title ? item.title : "Title test"
-          }}</mat-card-title>
-          <mat-card-subtitle class="font-subtitle">{{
-            item.subtitle ? item.subtitle : "Sub Title test"
-          }}</mat-card-subtitle>
-        </mat-card-header>
+  <div *ngIf="!articles || articles.length > 0; else articles_empty">
+    <mat-grid-list
+      [cols]="breakpoint"
+      rowHeight="600"
+      gutterSize="20"
+      (window:resize)="onResize($event)"
+    >
+      <mat-grid-tile *ngFor="let item of articles">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title c (click)="viewDetail(item)">{{
+              item.title ? item.title : "Title test"
+            }}</mat-card-title>
+            <mat-card-subtitle class="font-subtitle">{{
+              item.subtitle
+            }}</mat-card-subtitle>
+          </mat-card-header>
 
-        <ngx-picture
-          (click)="viewDetail(item)"
-          mat-card-image
-          [src]="
-            item.coverImageUrl
-              ? item.coverImageUrl
-              : 'https://material.angular.io/assets/img/examples/shiba2.jpg'
-          "
-          alt="test"
-          [lazyLoad]="true"
-          #picture
-        ></ngx-picture>
+          <ngx-picture
+            class="size-image"
+            (click)="viewDetail(item)"
+            mat-card-image
+            [src]="
+              item.coverImageUrl
+                ? item.coverImageUrl
+                : 'https://oivan.com/wp-content/uploads/2020/08/OIVAN_logo_grey-2.png'
+            "
+            [alt]="item.title"
+            [lazyLoad]="true"
+            #picture
+          ></ngx-picture>
 
-        <!-- <img
-          mat-card-image
-          src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-          alt="Photo of a Shiba Inu"
-        /> -->
-        <mat-card-content class="fixed-content">
-          <p>
-            {{ item.description }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button (click)="viewDetail(item)">View More</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <div *ngIf="isShowLoadMore" class="py-3 text-center">
-    <button mat-raised-button color="primary" (click)="loadMore()">
-      {{ isLoadMore ? "Loading..." : "Load More" }}
-    </button>
+          <!-- <img
+            mat-card-image
+            src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+            alt="Photo of a Shiba Inu"
+          /> -->
+          <mat-card-content class="fixed-content">
+            <p>
+              {{ item.description | excerpt: 90 }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="viewDetail(item)">View More</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <div *ngIf="isLoadMore" class="py-3" style="position: relative">
+      <ngx-spinner
+        bdColor="#fff"
+        name="sp2"
+        [fullScreen]="false"
+        type="ball-spin-clockwise"
+        color="#000"
+        size="small"
+      >
+        <p style="padding-top: 100px; color: black">Loading...</p>
+      </ngx-spinner>
+    </div>
   </div>
+  <ng-template #articles_empty>
+    <div class="article-empty">
+      <p>No articles available</p>
+      <button mat-raised-button color="primary" (click)="refresh()">
+        Refresh Page
+      </button>
+    </div>
+  </ng-template>
 </div>

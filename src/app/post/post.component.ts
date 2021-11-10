@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map, take } from 'rxjs/operators';
+import { AppService } from '../app.service';
 import { Article } from '../types';
 
 @Component({
@@ -15,52 +16,30 @@ export class PostComponent implements OnInit {
   urlArticle: string;
   constructor(
     private router: Router,
-    private apollo: Apollo,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private service: AppService
   ) {
     window.scrollTo(0, 0);
     this.urlArticle = this.router.getCurrentNavigation()?.extras.state?.url;
   }
 
   ngOnInit(): void {
-    this.spinner.show();
-    this.getArticle(
-      this.urlArticle
-        ? this.urlArticle
-        : 'https://www.fiercebiotech.com/biotech/pfizer-s-oral-covid-19-antiviral-cuts-hospitalization-death-by-85-sending-team-barreling-to'
-    ).subscribe(
+    this.spinner.show('sp1');
+    this.service.getArticle(this.urlArticle).subscribe(
       (res) => {
         this.article = res;
-        this.spinner.hide();
+        this.spinner.hide('sp1');
       },
       (err) => {
         console.log(err);
       },
       () => {
-        this.spinner.hide();
+        this.spinner.hide('sp1');
       }
     );
   }
 
-  getArticle(url: string) {
-    return this.apollo
-      .watchQuery<any>({
-        query: gql`
-          query getArticle($url: String!) {
-            article(url: $url) {
-              content
-              coverImageUrl
-              description
-              subtitle
-              title
-              url
-            }
-          }
-        `,
-        variables: {
-          url: url,
-        },
-      })
-      .valueChanges.pipe(map((result) => result.data.article));
+  viewOther() {
+    this.router.navigateByUrl('/posts');
   }
 }

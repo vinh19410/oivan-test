@@ -22,15 +22,21 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { FormsModule } from '@angular/forms';
+import { AppService } from './app.service';
+import { ExcerptFilter } from './excerpt.filter';
 
 @NgModule({
-  declarations: [AppComponent, PostsComponent, PostComponent],
+  declarations: [AppComponent, PostsComponent, PostComponent, ExcerptFilter],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+
+    //pipe
 
     //spinner
     NgxSpinnerModule,
@@ -44,11 +50,12 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
+    MatProgressSpinnerModule,
 
     GraphQLModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

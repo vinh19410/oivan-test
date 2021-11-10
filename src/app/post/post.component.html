@@ -1,12 +1,9 @@
 <div *ngIf="article" class="container py-5">
-  <div class="card mb-3 box-shadow">
+  <div *ngIf="article.content; else content_empty" class="card mb-3 box-shadow">
     <ngx-picture
+      *ngIf="article.coverImageUrl"
       mat-card-image
-      [src]="
-        article.coverImageUrl
-          ? article.coverImageUrl
-          : 'https://material.angular.io/assets/img/examples/shiba2.jpg'
-      "
+      [src]="article.coverImageUrl"
       class="card-img-top image-top"
       alt="test"
       [lazyLoad]="true"
@@ -14,9 +11,17 @@
     ></ngx-picture>
     <div class="card-body">
       <h1 class="card-title">
-        {{ article.title ? article.title : "Title Test" }}
+        {{ article.title }}
       </h1>
       <div class="card-text" [innerHtml]="article.content"></div>
     </div>
   </div>
+  <ng-template #content_empty>
+    <div class="article-empty">
+      <p>The article has a bit of a problem</p>
+      <button mat-raised-button color="primary" (click)="viewOther()">
+        View Other Article
+      </button>
+    </div>
+  </ng-template>
 </div>

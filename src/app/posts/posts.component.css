@@ -1,15 +1,23 @@
 .fixed-content {
-  min-height: 60px;
+  min-height: 40px;
 }
 .font-subtitle {
   font-size: 10px;
   font-style: italic;
 }
-
+mat-card-header {
+  height: 100px;
+}
 mat-card-title:hover {
   cursor: pointer;
 }
 
 ngx-picture:hover {
   cursor: pointer;
+}
+.mat-card-image {
+  margin: unset;
+}
+.size-image {
+  height: 300px;
 }
