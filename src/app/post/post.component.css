@@ -1,3 +1,6 @@
 .image-top {
   max-width: 500px;
 }
+.card-body {
+  width: 100%;
+}
