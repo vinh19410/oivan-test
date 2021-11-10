@@ -36,7 +36,7 @@
             }}</mat-card-subtitle>
           </mat-card-header>
 
-          <ngx-picture
+          <!-- <ngx-picture
             class="size-image"
             (click)="viewDetail(item)"
             mat-card-image
@@ -48,7 +48,18 @@
             [alt]="item.title"
             [lazyLoad]="true"
             #picture
-          ></ngx-picture>
+          ></ngx-picture> -->
+
+          <img
+            class="size-image"
+            (click)="viewDetail(item)"
+            [alt]="item.title"
+            [src]="
+              item.coverImageUrl
+                ? item.coverImageUrl
+                : 'https://oivan.com/wp-content/uploads/2020/08/OIVAN_logo_grey-2.png'
+            "
+          />
 
           <!-- <img
             mat-card-image

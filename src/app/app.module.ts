@@ -26,10 +26,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FormsModule } from '@angular/forms';
 import { AppService } from './app.service';
-import { ExcerptFilter } from './excerpt.filter';
+import { ExcerptFilter } from './pipe/excerpt.filter';
+import { LazyImgDirective } from './pipe/lazyimage.directive';
 
 @NgModule({
-  declarations: [AppComponent, PostsComponent, PostComponent, ExcerptFilter],
+  declarations: [
+    AppComponent,
+    PostsComponent,
+    PostComponent,
+    ExcerptFilter,
+    LazyImgDirective,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
